@@ -2,13 +2,13 @@ import { SearchBar } from "../components/SearchBar";
 import { Link } from 'react-router-dom';
 import { Club } from "./Club";
 import { WBK } from 'wikibase-sdk'
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export const Home=()=>{
-  const [DataClubName,setDataClubName]=useState([]);
+export const Home = () => {
+  const [DataClubName, setDataClubName] = useState([]);
   useEffect(() => {
-     const getClubName=async()=>{
-      var requete:string=`
+    const getClubName = async () => {
+      var requete: string = `
     PREFIX wdt: <http://www.wikidata.org/prop/direct/>
     PREFIX wd: <http://www.wikidata.org/entity/>
     
@@ -22,25 +22,25 @@ export const Home=()=>{
         instance: 'https://www.wikidata.org',
         sparqlEndpoint: 'https://query.wikidata.org/sparql'
       })
-      const url:string = wbk.sparqlQuery(requete)
-      const simplifiedResults:any = await fetch(url)
-      .then(res => res.json())
+      const url: string = wbk.sparqlQuery(requete)
+      const simplifiedResults: any = await fetch(url)
+        .then(res => res.json())
       console.log(simplifiedResults)
       setDataClubName(simplifiedResults.results.bindings)
     }
     getClubName();
-  });
-    return(
-        <div>
-        <h1>Test page d'acceuil</h1>
-        <SearchBar/>
-        <ul>
-        {DataClubName.map((clubData: any, index: number) => {
+  },[]);
   return (
-    <li><Link to={`/Club/${clubData.nom.value} `}>{clubData.nom.value}</Link></li>
-  );
-})}
-        </ul>
-      </div>
-    )
+    <div>
+      <h1>Test page d'acceuil</h1>
+      <SearchBar />
+      <ul>
+        {DataClubName.map((clubData: any, index: number) => {
+          return (
+            <li><Link to={`/Club/${clubData.nom.value} `}>{clubData.nom.value}</Link></li>
+          );
+        })}
+      </ul>
+    </div>
+  )
 }
