@@ -29,15 +29,17 @@ export const Home = () => {
       setDataClubName(simplifiedResults.results.bindings)
     }
     getClubName();
-  },[]);
+  }, []);
   return (
     <div>
       <h1>Test page d'acceuil</h1>
       <SearchBar />
       <ul>
         {DataClubName.map((clubData: any, index: number) => {
+          const partsOfUrl = clubData.club.value.split("/");
+          var endString: string = partsOfUrl[partsOfUrl.length - 1];
           return (
-            <li><Link to={`/Club/${clubData.nom.value} `}>{clubData.nom.value}</Link></li>
+            <li><Link to={`/Club/${endString} `}>{clubData.nom.value}</Link></li>
           );
         })}
       </ul>
