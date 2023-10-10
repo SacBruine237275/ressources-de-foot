@@ -1,9 +1,9 @@
-type CompetitionProps={
-    id:string
+type CompetitionProps = {
+    id: string
 }
 
-export const Competition:React.FC<CompetitionProps>=({id})=>{
-    return(
+export const Competition: React.FC<CompetitionProps> = ({ id }) => {
+    return (
         <div>Je suis une competition avec l'id {id}</div>
     )
 }
