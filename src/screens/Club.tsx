@@ -1,12 +1,10 @@
+import { useParams } from 'react-router-dom';
 
-type ClubProps={
-    id:string
-}
-
-export const Club:React.FC<ClubProps>=({id})=>{
+export const Club=()=>{
+    const { name,id } = useParams();
     return(
         <div>
-            <p>Club avec l'id {id}</p>
+            <p>Club avec l'id {name}</p>
         </div>
     )
 }
