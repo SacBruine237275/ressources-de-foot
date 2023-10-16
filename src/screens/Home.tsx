@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Club } from "./Club";
 import { WBK } from 'wikibase-sdk'
 import { useState, useEffect } from "react";
+import callWikidataAPI from "../Common/Function";
 
 export const Home = () => {
   const [DataClubName, setDataClubName] = useState([]);
@@ -18,15 +19,8 @@ export const Home = () => {
       ?club wdt:P1448 ?nom
     }
     GROUP BY ?club`;
-      const wbk = WBK({
-        instance: 'https://www.wikidata.org',
-        sparqlEndpoint: 'https://query.wikidata.org/sparql'
-      })
-      const url: string = wbk.sparqlQuery(requete)
-      const simplifiedResults: any = await fetch(url)
-        .then(res => res.json())
-      console.log(simplifiedResults)
-      setDataClubName(simplifiedResults.results.bindings)
+      var data = await callWikidataAPI(requete);
+      setDataClubName(data.results.bindings)
     }
     getClubName();
   }, []);
