@@ -25,9 +25,10 @@ export const Home = () => {
     getClubName();
   }, []);
   return (
-    <div>
-      <h1>Test page d'acceuil</h1>
+    <div className="flex flex-col">
+      <h1 className="mt-8">Test page d'acceuil</h1>
       <SearchBar />
+      <div></div>
       <ul>
         {DataClubName.map((clubData: any, index: number) => {
           const partsOfUrl = clubData.club.value.split("/");

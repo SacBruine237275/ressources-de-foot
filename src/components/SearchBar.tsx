@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import callWikidataAPI from "../Common/Function";
 import { Link } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai'
 
 
 export const SearchBar = () => {
@@ -39,13 +40,17 @@ export const SearchBar = () => {
   }, [searchText]);
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Rechercher un joueur ou un club"
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <ul>
+    <div className="relative flex flex-col items-center">
+      <div className="flex items-center">
+        <input
+          type="text"
+          placeholder="Rechercher un joueur ou un club"
+          onChange={(e) => setSearchText(e.target.value)}
+          className="p-2 border border-gray-300 rounded w-64"
+        />
+        <AiOutlineSearch className="mr-2" />
+      </div>
+      <ul className="absolute top-12 w-64 max-h-40 overflow-y-auto bg-white rounded mt-2">
         {DataSearchBar.map((result: any, index) => {
           var isJoueur: boolean = !!result.joueur;
           const partsOfUrl = isJoueur ? result.joueur?.value.split("/") : result.club?.value.split("/");
@@ -54,7 +59,7 @@ export const SearchBar = () => {
           var text = isJoueur ? result.name?.value : result.nom?.value;
           return (
             <li>
-              <Link to={link}>{text}</Link>
+              <Link to={link} className="block p-2 hover:bg-gray-100 border-b border-gray-300">{text}</Link>
             </li>
           );
         })}
