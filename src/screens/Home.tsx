@@ -26,7 +26,6 @@ export const Home = () => {
   }, []);
   return (
     <div className="flex flex-col">
-      <h1 className="mt-8">Test page d'acceuil</h1>
       <SearchBar />
       <div></div>
       <ul>
