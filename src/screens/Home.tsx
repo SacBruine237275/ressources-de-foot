@@ -10,15 +10,15 @@ export const Home = () => {
   useEffect(() => {
     const getClubName = async () => {
       var requete: string = `
-    PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-    PREFIX wd: <http://www.wikidata.org/entity/>
-    
-    SELECT ?club (SAMPLE(?nom) AS ?nom) {
-      ?club wdt:P118 wd:Q9448 ;
-            wdt:P31 wd:Q476028 .
-      ?club wdt:P1448 ?nom
-    }
-    GROUP BY ?club`;
+        PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+        PREFIX wd: <http://www.wikidata.org/entity/>
+        
+        SELECT ?club (SAMPLE(?nom) AS ?nom) {
+          ?club wdt:P118 wd:Q9448 ;
+                wdt:P31 wd:Q476028 .
+          ?club wdt:P1448 ?nom
+        }
+        GROUP BY ?club`;
       var data = await callWikidataAPI(requete);
       setDataClubName(data.results.bindings)
     }
