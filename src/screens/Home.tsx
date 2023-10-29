@@ -25,18 +25,19 @@ export const Home = () => {
     getClubName();
   }, []);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pl-4">
       <SearchBar />
-      <div></div>
+      <div className="mb-2">
       <ul>
         {DataClubName.map((clubData: any, index: number) => {
           const partsOfUrl = clubData.club.value.split("/");
           var endString: string = partsOfUrl[partsOfUrl.length - 1];
           return (
-            <li><Link to={`/Club/${endString} `}>{clubData.nom.value}</Link></li>
+            <li className="mb-1"><Link to={`/Club/${endString} `} className="text-lg">{clubData.nom.value}</Link></li>
           );
         })}
       </ul>
+      </div>
     </div>
   )
 }
