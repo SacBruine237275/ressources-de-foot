@@ -7,8 +7,8 @@ import { count } from 'console';
 export const Club = () => {
     const { id } = useParams();
 
-    const [DataClubName, setDataClubName] = useState([]);
-    const [DataCoachName, setDataCoachName] = useState([]);
+    const [DataClubName, setDataClubName] = useState('');
+    const [DataCoachName, setDataCoachName] = useState('');
     const [DataCoachPhoto, setDataCoachPhoto] = useState([]);
     const [DataOwnerName, setDataOwnerName] = useState([]);
     
@@ -69,7 +69,7 @@ export const Club = () => {
                             wdt:P1559 ?playerName ;
                             wdt:P413 ?speciality .
                     ?speciality rdfs:label ?specialityName
-                    FILTER (lang(?specialityName) = "en")
+                    FILTER (lang(?specialityName) = "fr")
                   }`;
             var data = await callWikidataAPI(requete);
             setDataPlayers(data.results.bindings)
@@ -98,11 +98,11 @@ export const Club = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {DataPlayers.map((playerInfo: any) => {
+                {DataPlayers.map((playerInfo: any,index:number) => {
                      const playerLink = playerInfo.player.value.split("/");
                      const playerID: string = playerLink[playerLink.length - 1]
                     return(
-                    <tr>
+                    <tr key={index}>
                         <td><Link to={`/Joueur/${playerID}`}>{playerInfo.playerName.value}</Link></td>
                         <td><Link to={`/Joueur/${playerID}`}>{playerInfo.specialityName.value}</Link></td>
                     </tr>

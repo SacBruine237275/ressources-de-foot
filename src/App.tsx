@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       <header className='flex items-center mt-6'>
-          <img className='w-20' src='images/logo.png' alt='logo du site Ressource de foot' loading='lazy' />
+          <img className='w-20' src='/images/logo.png' alt='logo du site Ressource de foot' loading='lazy' />
           <h1 className='text-xl font-semibold'>Ressource de foot</h1>
       </header>
       <div className="container mx-auto border-t border-gray-400 m-4"></div>

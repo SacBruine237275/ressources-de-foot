@@ -33,7 +33,7 @@ export const Home = () => {
           const partsOfUrl = clubData.club.value.split("/");
           var endString: string = partsOfUrl[partsOfUrl.length - 1];
           return (
-            <li className="mb-1"><Link to={`/Club/${endString} `} className="text-lg">{clubData.nom.value}</Link></li>
+            <li key={index} className="mb-1"><Link to={`/Club/${endString} `} className="text-lg">{clubData.nom.value}</Link></li>
           );
         })}
       </ul>
