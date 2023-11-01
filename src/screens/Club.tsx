@@ -21,9 +21,9 @@ export const Club = () => {
                 PREFIX wd: <http://www.wikidata.org/entity/>
                 
                 select ?clubName ?coach ?owner {
-                    wd:` + id + ` wdt:P1448 ?clubName ;
-                    OPTIONAL { wd:` + id + ` wdt:P286 ?coach . }
-                    OPTIONAL { wd:` + id + ` wdt:P127 ?owner . }
+                    wd:${id} wdt:P1448 ?clubName ;
+                    OPTIONAL { wd:${id} wdt:P286 ?coach . }
+                    OPTIONAL { wd:${id} wdt:P127 ?owner . }
                   } LIMIT 1`;
             var data1 = await callWikidataAPI(requete1);
             if(data1.results.bindings[0].coach != null){
@@ -34,8 +34,9 @@ export const Club = () => {
                     PREFIX wd: <http://www.wikidata.org/entity/>
                     
                     select ?coachName ?coachPhoto {
-                        wd:` + coachID + ` rdfs:label ?coachName .
-                        OPTIONAL { wd:` + coachID + ` wdt:P18 ?coachPhoto . } 
+                        wd:${coachID}  rdfs:label ?coachName .
+                        OPTIONAL { wd:${coachID}   wdt:P18 ?coachPhoto . } 
+                        FILTER(LANG(?coachName) = "en")
                   }  LIMIT 1`;
                 var data2 = await callWikidataAPI(requete2);
                 setDataCoachName(data2.results.bindings[0].coachName.value)
@@ -50,7 +51,8 @@ export const Club = () => {
                     PREFIX wd: <http://www.wikidata.org/entity/>
                     
                     select ?ownerName {
-                        wd:` + ownerID + ` rdfs:label ?ownerName .
+                        wd:${ownerID} rdfs:label ?ownerName .
+                        FILTER(LANG(?ownerName) = "en")
                   } LIMIT 1`;
                 var data3 = await callWikidataAPI(requete3);
                 setDataOwnerName(data3.results.bindings[0].ownerName.value)
@@ -67,7 +69,7 @@ export const Club = () => {
                             wdt:P1559 ?playerName ;
                             wdt:P413 ?speciality .
                     ?speciality rdfs:label ?specialityName
-                    FILTER (lang(?specialityName) = "fr")
+                    FILTER (lang(?specialityName) = "en")
                   }`;
             var data = await callWikidataAPI(requete);
             setDataPlayers(data.results.bindings)
@@ -87,14 +89,28 @@ export const Club = () => {
             <p>Nom du propriétaire : {DataOwnerName}</p>
 
             <b>Joueurs : </b>
-            <ul>
+            <div className='p-4'>
+            <table className='table-auto w-full'>
+                <thead>
+                    <tr>
+                        <th>Nom joueur</th>
+                        <th>Poste joueur</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {DataPlayers.map((playerInfo: any) => {
-                    const playerLink = playerInfo.player.value.split("/");
-                    const playerID: string = playerLink[playerLink.length - 1]
-                    return(<li><Link to={`/Joueur/${playerID}`}>{playerInfo.playerName.value} {playerInfo.specialityName.value}</Link></li>);
+                     const playerLink = playerInfo.player.value.split("/");
+                     const playerID: string = playerLink[playerLink.length - 1]
+                    return(
+                    <tr>
+                        <td><Link to={`/Joueur/${playerID}`}>{playerInfo.playerName.value}</Link></td>
+                        <td><Link to={`/Joueur/${playerID}`}>{playerInfo.specialityName.value}</Link></td>
+                    </tr>
+                    )
                 })}
-            </ul>
-
+                </tbody>
+            </table>
+            </div>
             <p>Elements qu'on peux mettre : </p>
             <ul>
                 <li>Emplacement du club (il a un genre de google map dans les données pour club très connus)</li>
