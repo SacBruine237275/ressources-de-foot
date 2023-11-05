@@ -99,7 +99,7 @@ export const Club = () => {
 
     return (
         <div>
-            <p className='font-bold'>{DataClubName}</p>
+            <p className='mt-4 mb-4 flex justify-center items-center text-4xl font-bold'>{DataClubName}</p>
             <p >
                 <img src={DataCoachPhoto.toString()} width="200" className="object-cover" alt={DataCoachName} />
                 <span>{DataCoachName}</span>
