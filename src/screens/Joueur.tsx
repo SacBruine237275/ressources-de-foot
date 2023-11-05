@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import callWikidataAPI from "../Common/Function";
 import { useEffect, useState } from "react";
 import PlayerInfo from "../Common/IPlayerInfo";
@@ -37,10 +37,13 @@ export const Joueur = () => {
             var requeteGetTeamPlayer: string = `
           PREFIX wdt: <http://www.wikidata.org/prop/direct/>
           PREFIX wd: <http://www.wikidata.org/entity/>
-          SELECT ?teamName{
-            wd:${id} wdt:P54 ?team .
+          SELECT ?team ?teamName ?leagueName{
+            wd:Q10520 wdt:P54 ?team .
             ?team rdfs:label ?teamName .
-          FILTER(LANG(?teamName) = "en")
+            ?team wdt:P118 ?league .
+            ?league rdfs:label ?leagueName .
+          FILTER(LANG(?teamName) = "en") .
+          FILTER(LANG(?leagueName) = "en")
           }`
             var requeteGetRecompensePlayer: string = `
           PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -73,57 +76,66 @@ export const Joueur = () => {
 
     return (
         <div>
-            Joueur avec l'id : {id}
-            <p>Nom du joueur : {PlayerName}</p>
-            <p>Pays du joueur : {PlayerCountry}</p>
-            <p>Photo du joueur <img src={PlayerImage} alt="" /></p>
-            <p>Posion du joueur : {PlayerPosition}</p>
-            <p>Club du joueur</p>
-            <table>
+            <p className='mt-4 mb-4 flex justify-center items-center text-4xl font-bold'>{PlayerName}</p>
+            <img src={PlayerImage} width="200" className="object-cover" alt={PlayerName} />
+            <p className="font-bold">{PlayerPosition}</p>
+            <p>Représente comme pays en équipe national {PlayerCountry}</p>
+            <p className="mt-6 mb-2 font-bold">Liste des clubs où {PlayerName} a jouer : </p>
+            <table className="table-auto w-2/3 sm:w-full">
                 <thead>
-                    <tr>
-                        <th>Club du joueur</th>
+                    <tr className="bg-blue-500 text-white">
+                        <th className='px-4 py-2'>Nom du club</th>
                     </tr>
                 </thead>
                 <tbody>
                     {DataTeams.map((result: any, index: number) => {
-                        return (
-                            <tr key={index}>
-                                <td>{result.teamName.value}</td>
-                            </tr>
-                        )
+                        if (result.leagueName.value === "Premier League") {
+                            const clubLink = result.team.value.split("/");
+                            const clubID: string = clubLink[clubLink.length - 1]
+                            return (
+                                <tr key={index} className='border-b border-gray-300 h-12'>
+                                    <td className='px-4 py-2 text-center'><Link to={`/Club/${clubID}`} className='text-white-500 hover:underline'>{result.teamName.value}</Link></td>
+                                </tr>
+                            )
+                        } else {
+                            return (
+                                <tr key={index} className='border-b border-gray-300 h-12'>
+                                    <td className='px-4 py-2 text-center'>{result.teamName.value}</td>
+                                </tr>
+                            )
+                        }
                     })}
                 </tbody>
             </table>
-            <p>Récompense du joueur : </p>
-            <table>
+            <p className="mt-6 mb-2 font-bold">Les différentes récompense du joueur : </p>
+            <table className="table-auto w-2/3 sm:w-full">
                 <thead>
-                    <tr>
-                        <th>Nom récompense</th>
+                    <tr className="bg-blue-500 text-white">
+                        <th className="px-4 py-2">Nom des récompenses</th>
                     </tr>
                 </thead>
                 <tbody>
                     {DataRecompense.map((result: any, index: number) => {
                         return (
-                            <tr key={index}>
-                                <td>{result.recompenseName.value}</td>
+                            <tr key={index} className='border-b border-gray-300 h-12'>
+                                <td className='px-4 py-2 text-center'>{result.recompenseName.value}</td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
-            <p>Nommination : </p>
-            <table>
+            <p className="mt-6 mb-2 font-bold">Voici les différents nommination de {PlayerName} : </p>
+            <table className="table-auto w-2/3 sm:w-full">
                 <thead>
-                    <tr>
-                        <th>Nom Nommination</th>
+                    <tr className="bg-blue-500 text-white">
+                        <th className="px-4 py-2">Nom Nommination</th>
                     </tr>
                 </thead>
                 <tbody>
                     {DataNomination.map((result: any, index: number) => {
                         return (
-                            <tr key={index}>
-                                <td>{result.nominatedName.value}</td>
+                            <tr key={index} className='border-b border-gray-300 h-12'>
+                                <td className='px-4 py-2 text-center'>{result.nominatedName.value}</td>
                             </tr>
                         )
                     })}
