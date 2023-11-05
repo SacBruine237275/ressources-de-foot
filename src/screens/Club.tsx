@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import callWikidataAPI from "../Common/Function";
 import { Link } from 'react-router-dom';
-import { count } from 'console';
 
 export const Club = () => {
     const { id } = useParams();
@@ -100,16 +99,14 @@ export const Club = () => {
 
     return (
         <div>
-            <b>Club avec l'id {id}</b>
-
-            <p>Nom du club : {DataClubName}</p>
-            <p className="flex flex-col items-end text-center">
+            <p className='font-bold'>{DataClubName}</p>
+            <p >
                 <img src={DataCoachPhoto.toString()} width="200" className="object-cover" alt={DataCoachName} />
-                <span>Nom du coach : {DataCoachName}</span>
+                <span>{DataCoachName}</span>
             </p>
-            <p>Nom du propriétaire : {DataOwnerName}</p>
+            <p className="text-lg">Possédé par : {DataOwnerName}</p>
 
-            <p>Liste des joueurs passés par le club : </p>
+            <p className='font-bold'>Liste des joueurs passés par le club : </p>
             <div className='p-4'>
                 <table className='table-auto w-2/3 sm:w-full'>
                     <thead>
