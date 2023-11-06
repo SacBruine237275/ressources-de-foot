@@ -18,22 +18,22 @@ export const Joueur = () => {
         const setDataPlayer = (Data: PlayerInfo) => {
             setPlayerName(Data.name.value)
             setPlayerCountry(Data.countryName.value)
-            setPlayerImage(Data.image.value)
+            setPlayerImage(Data.image?.value)
             setPlayerPosition(Data.positonName.value)
         }
         const getPlayerInfo = async () => {
             var requeteInfoJoueur: string = `
         PREFIX wdt: <http://www.wikidata.org/prop/direct/>
         PREFIX wd: <http://www.wikidata.org/entity/>
-        Select ?name ?image ?countryName ?positonName{
+        Select ?name ?image ?countryName ?positonName{ 
             wd:${id} wdt:P1559 ?name ; 
-            wdt:P18 ?image ; 
-            wdt:P413 ?postion ;
-            wdt:P1532 ?countryID .
-            ?countryID wdt:P1448 ?countryName .
-            ?postion rdfs:label ?positonName .
-            FILTER(LANG(?positonName) = "fr")
-          }`;
+                        wdt:P413 ?postion ;
+                        wdt:P1532 ?countryID .
+                         OPTIONAL {wd:${id} wdt:P18 ?image}. 
+                        ?countryID wdt:P1448 ?countryName .
+                        ?postion rdfs:label ?positonName .
+                        FILTER(LANG(?positonName) = "fr")
+                    }`;
             var requeteGetTeamPlayer: string = `
           PREFIX wdt: <http://www.wikidata.org/prop/direct/>
           PREFIX wd: <http://www.wikidata.org/entity/>
