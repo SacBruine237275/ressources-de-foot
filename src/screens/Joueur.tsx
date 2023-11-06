@@ -38,7 +38,7 @@ export const Joueur = () => {
           PREFIX wdt: <http://www.wikidata.org/prop/direct/>
           PREFIX wd: <http://www.wikidata.org/entity/>
           SELECT ?team ?teamName ?leagueName{
-            wd:Q10520 wdt:P54 ?team .
+            wd:${id} wdt:P54 ?team .
             ?team rdfs:label ?teamName .
             ?team wdt:P118 ?league .
             ?league rdfs:label ?leagueName .
