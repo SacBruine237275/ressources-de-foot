@@ -40,14 +40,14 @@ export const SearchBar = () => {
                   ?joueur wdt:P54 ?club .
                   ?club wdt:P118 wd:Q9448 .
                   ?joueur wdt:P1559 ?name .
-                  FILTER(contains(?name, "${searchText}")) .
+                  FILTER(contains(LCASE(?name), LCASE("${searchText}"))) .
                 }
                 UNION
                 {
                   ?club wdt:P118 wd:Q9448 ;
                         wdt:P31 wd:Q476028 .
                   ?club wdt:P1448 ?nom .
-                  FILTER(contains(?nom, "${searchText}"))
+                  FILTER(contains(LCASE(?nom), LCASE("${searchText}")))
                 }
               }`;
         const data = await callWikidataAPI(requete);
