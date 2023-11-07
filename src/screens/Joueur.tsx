@@ -17,7 +17,7 @@ export const Joueur = () => {
     useEffect(() => {
         const setDataPlayer = (Data: PlayerInfo) => {
             setPlayerName(Data.name.value)
-            setPlayerCountry(Data.countryName.value)
+            setPlayerCountry(Data.countryName?.value)
             setPlayerImage(Data.image?.value)
             setPlayerPosition(Data.positonName.value)
         }
@@ -27,10 +27,10 @@ export const Joueur = () => {
         PREFIX wd: <http://www.wikidata.org/entity/>
         Select ?name ?image ?countryName ?positonName{ 
             wd:${id} wdt:P1559 ?name ; 
-                        wdt:P413 ?postion ;
-                        wdt:P1532 ?countryID .
-                         OPTIONAL {wd:${id} wdt:P18 ?image}. 
-                        ?countryID wdt:P1448 ?countryName .
+                        wdt:P413 ?postion .
+                        OPTIONAL {wd:${id} wdt:P18 ?image}. 
+                        OPTIONAL{wd:${id} wdt:P1532 ?countryID .
+                        ?countryID wdt:P1448 ?countryName} .
                         ?postion rdfs:label ?positonName .
                         FILTER(LANG(?positonName) = "fr")
                     }`;
@@ -77,7 +77,7 @@ export const Joueur = () => {
     return (
         <div>
             <p className='mt-4 mb-4 flex justify-center items-center text-4xl font-bold'>{PlayerName}</p>
-            <img src={PlayerImage} width="200" className="object-cover" alt={PlayerName} />
+            <img src={PlayerImage} height="200" width="200" className="object-cover" alt={PlayerName} />
             <p className="font-bold">{PlayerPosition}</p>
             <p>Représente comme pays en équipe national {PlayerCountry}</p>
             <p className="mt-6 mb-2 font-bold">Liste des clubs où {PlayerName} a jouer : </p>

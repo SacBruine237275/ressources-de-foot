@@ -101,7 +101,7 @@ export const Club = () => {
         <div>
             <p className='mt-4 mb-4 flex justify-center items-center text-4xl font-bold'>{DataClubName}</p>
             <p >
-                <img src={DataCoachPhoto.toString()} width="200" className="object-cover" alt={DataCoachName} />
+                <img src={DataCoachPhoto.toString()} height="200" width="200" className="object-cover" alt={DataCoachName} />
                 <span>{DataCoachName}</span>
             </p>
             <p className="text-lg">Possédé par : {DataOwnerName}</p>
